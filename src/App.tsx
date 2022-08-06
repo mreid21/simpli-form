@@ -13,11 +13,15 @@ function App() {
   }
 
 
+  const name = useFormField('', {
+    validators: [isRequired, minLength, saysNaruto],
+    validationType: 'onChange'
+  })
 
-
-
-  const name = useFormField('', [isRequired, minLength, saysNaruto])
-  const age = useFormField('', isRequired, {validationType: 'onSubmit'})
+  const age = useFormField('', {
+    validators: [isRequired],
+    validationType: 'onChange'
+  })
 
   return (
     <>

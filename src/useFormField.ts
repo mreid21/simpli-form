@@ -5,7 +5,8 @@ import { ValidationConfig } from './textValidation'
 type Field = string | number
 type Validator = ((...params: any) => {error: string} | boolean)
 
-function useFormField<T extends Field>(initial: T, validators: Validator[] | Validator, config: ValidationConfig = {validationType: 'onChange'}) {
+function useFormField<T extends Field>(initial: T, config: ValidationConfig) {
+    const {validators, validationType} = config
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')
 
@@ -25,13 +26,8 @@ function useFormField<T extends Field>(initial: T, validators: Validator[] | Val
     }
 
     useEffect(() => {
-        if (Array.isArray(validators)) {
-            for(const validator of validators) {
-                if(validate(validator(value))) break;
-            }
-        }
-        else {
-            validate(validators(value))
+        for(const validator of validators) {
+            if(validate(validator(value))) break;
         }
     }, [value])
 

@@ -1,10 +1,10 @@
 type TextFields = 'password' | 'text' | 'email'
-type Validator = ((...params: any) => {error: string} | boolean)
+type Validator<T> = ((field: T) => {error: string} | boolean)
 
-export type ValidationConfig = {
-    validators: Validator[]
+export type ValidationConfig<T> = {
+    validators: Validator<T>[]
     validationType: 'onChange' | 'onSubmit',
-    error?: {
+    errors?: {
         duration?: number, //in millis
     }
 }

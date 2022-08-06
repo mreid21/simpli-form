@@ -5,7 +5,7 @@ import { ValidationConfig } from './textValidation'
 type Field = string | number
 type Validator = ((...params: any) => {error: string} | boolean)
 
-function useFormField<T extends Field>(initial: T, config: ValidationConfig) {
+function useFormField<T extends Field>(initial: T, config: ValidationConfig<T>) {
     const {validators, validationType} = config
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')

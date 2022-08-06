@@ -9,20 +9,18 @@ function App() {
 
   const minLength = (text: string) => text.length < 10 ? {error: 'does not meet min-length'} : false
 
-  const saysNaruto = (text: string) => {
-    return text.toLowerCase() !== 'naruto <3 <3' ? {error: 'does not say naruto'} : false
-  }
-
   const greaterThanZero = (num: number) => num && num <= 0 ? {error: 'num less than zero'} : false
 
   
 
   const name = useFormField('', {
+    name:'name',
     validators: [isRequired, minLength],
     validationType: 'onChange'
   })
 
   const age = useFormField(0, {
+    name: 'age',
     validators: [greaterThanZero],
     validationType: 'onSubmit',
     errors: {
@@ -30,9 +28,7 @@ function App() {
     }
   })
 
-  const {submit} = useForm({
-    fields: [name, age]
-  })
+  const {submit} = useForm<{name: string, age: number}>({fields: [name, age]})
 
   return (
     <>
@@ -42,8 +38,8 @@ function App() {
         <input onChange={age.onChange} value={age.value} type="number" />
         {age.error && <span style={{color: 'red'}}>{age.error}</span>}
 
-        <button onClick={submit}>submit</button>
 
+        <button onClick={submit}>submit</button>
     </>
   )
 }

@@ -2,6 +2,7 @@ type TextFields = 'password' | 'text' | 'email'
 type Validator<T> = ((field: T) => {error: string} | boolean)
 
 export type ValidationConfig<T> = {
+    name: string,
     validators: Validator<T>[]
     validationType: 'onChange' | 'onSubmit',
     errors?: {

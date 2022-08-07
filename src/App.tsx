@@ -2,6 +2,11 @@ import { ValidationConfig } from "./textValidation"
 import { useForm } from "./useForm"
 import useFormField from "./useFormField"
 
+export interface Values {
+  name: string,
+  age: number
+}
+
 function App() {
 
 
@@ -10,17 +15,18 @@ function App() {
   const minLength = (text: string) => text.length < 10 ? {error: 'does not meet min-length'} : false
 
   const greaterThanZero = (num: number) => num && num <= 0 ? {error: 'num less than zero'} : false
-
   
+  interface Values {
+    name: string,
+    age: number
+  }
 
-  const name = useFormField('', {
-    name:'name',
+  const name = useFormField<string, Values>('', 'name', {
     validators: [isRequired, minLength],
     validationType: 'onChange'
   })
 
-  const age = useFormField(0, {
-    name: 'age',
+  const age = useFormField<number, Values>(0, 'age', {
     validators: [greaterThanZero],
     validationType: 'onSubmit',
     errors: {
@@ -28,7 +34,7 @@ function App() {
     }
   })
 
-  const {submit} = useForm<{name: string, age: number}>({fields: [name, age]})
+  useForm<Values>([age, name])
 
   return (
     <>
@@ -38,8 +44,6 @@ function App() {
         <input onChange={age.onChange} value={age.value} type="number" />
         {age.error && <span style={{color: 'red'}}>{age.error}</span>}
 
-
-        <button onClick={submit}>submit</button>
     </>
   )
 }

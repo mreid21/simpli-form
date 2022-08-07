@@ -1,31 +1,12 @@
 import React from 'react'
 
-type FieldObj = {
-    value: any,
-    name: string,
-    onChange: Function,
+interface Field<T>  {
+    name: keyof T | undefined,
     error: string
 }
 
+const useForm = <T>(fields: Field<T>[]) => {
 
-const useForm = <T>(state: {fields: FieldObj[]}) => {
-
-
-    const submit = () => {
-        if(state.fields.some((field) => field.error !== '')) console.log('has errors')
-        console.log(createResults())
-    }
-
-    const createResults = () => {
-        let result = {values: {} as Partial<T>}
-    
-
-        return result
-    }
-
-    return {
-        submit
-    }
 }
 
 

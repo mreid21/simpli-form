@@ -5,8 +5,8 @@ import { ValidationConfig } from './textValidation'
 type Field = string | number
 type Validator = ((...params: any) => {error: string} | boolean)
 
-function useFormField<T extends Field>(initial: T, config: ValidationConfig<T>) {
-    const {validators, name} = config
+function useFormField<T extends Field, U>(initial: T, name: keyof U, config: ValidationConfig<T>) {
+    const {validators} = config
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')
 

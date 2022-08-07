@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { ValidationConfig } from './textValidation'
+import { ValidationConfig } from './validation'
 
 
 type Field = string | number

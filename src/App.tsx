@@ -1,4 +1,4 @@
-import {Text} from "./textValidation"
+import * as Text from "./textValidation"
 import useFormField from "./useFormField"
 
 export interface Values {
@@ -7,12 +7,6 @@ export interface Values {
 }
 
 function App() {
-
-  
-  interface Values {
-    name: string,
-    age: number
-  }
 
   const name = useFormField('', 'name', {
     validators: [Text.isRequired, Text.minLength(10)],

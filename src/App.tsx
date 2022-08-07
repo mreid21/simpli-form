@@ -1,4 +1,4 @@
-import { isRequired, minLength, maxLength } from "./textValidation"
+import {Text} from "./textValidation"
 import useFormField from "./useFormField"
 
 export interface Values {
@@ -15,7 +15,7 @@ function App() {
   }
 
   const name = useFormField('', 'name', {
-    validators: [isRequired, minLength(5), maxLength(15)],
+    validators: [Text.isRequired, Text.minLength(10)],
     validationType: 'onChange'
   })
 

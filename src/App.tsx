@@ -1,6 +1,4 @@
-import { ValidationConfig } from "./textValidation"
-import { Validator } from "./textValidation"
-import { useForm } from "./useForm"
+import { isRequired, minLength, maxLength } from "./textValidation"
 import useFormField from "./useFormField"
 
 export interface Values {
@@ -10,13 +8,6 @@ export interface Values {
 
 function App() {
 
-
-  const isRequired = (text: string) => text === '' ? {error: 'input is required'} : false
-
-  const _minLength = (text: string, length: number) => text.length < length ? {error: 'too short'} : false
-
-  const minLength = (length: number): Validator<string, [number]> => [_minLength, length]
-
   
   interface Values {
     name: string,
@@ -24,7 +15,7 @@ function App() {
   }
 
   const {error, ...handlers} = useFormField('', 'name', {
-    validators: [isRequired, minLength(10)],
+    validators: [isRequired, minLength(5), maxLength(15)],
     validationType: 'onChange'
   })
 

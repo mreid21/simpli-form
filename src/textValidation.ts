@@ -10,11 +10,13 @@ export type ValidationConfig<T> = {
     }
 }
 
+const isRequired = (text: string) => text === '' ? {error: 'input is required'} : false
 
-const isRequired = (text: string) => text === '' ? {error: 'required'} : false
+const _minLength = (text: string, length: number) => text.length < length ? {error: 'too short'} : false
+const minLength = (length: number): Validator<string, [number]> => [_minLength, length]
 
-const minLength = (text: string, minLength: number) => text.length < minLength ? {error: 'min length'} : false
+const _maxLength = (text: string, length: number) => text.length > length ? {error: 'too long'} : false
+const maxLength = (length: number): Validator<string, [number]> => [_maxLength, length]
 
 
-
-export {isRequired, minLength}
+export {isRequired, minLength, maxLength}

@@ -14,15 +14,15 @@ function App() {
     age: number
   }
 
-  const {error, ...handlers} = useFormField('', 'name', {
+  const name = useFormField('', 'name', {
     validators: [isRequired, minLength(5), maxLength(15)],
     validationType: 'onChange'
   })
 
   return (
     <>
-      <input type="text" {...handlers} />
-      {error && <span style={{color: 'red'}}>{error}</span>}
+      <input type="text" {...name} />
+      {name.error && <span style={{color: 'red'}}>{name.error}</span>}
     </>
   )
 }

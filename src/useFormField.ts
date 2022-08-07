@@ -3,7 +3,7 @@ import { ValidationConfig } from './textValidation'
 
 
 type Field = string | number
-type Validator = ((...params: any) => {error: string} | boolean)
+
 
 function useFormField<T extends Field, U>(initial: T, name: keyof U, config: ValidationConfig<T>) {
     const {validators} = config
@@ -27,7 +27,16 @@ function useFormField<T extends Field, U>(initial: T, name: keyof U, config: Val
 
     useEffect(() => {
         for(const validator of validators) {
-            if(validate(validator(value))) break;
+            if (Array.isArray(validator)) {
+                const [func, ...params] = validator
+                if(validate(func(value, ...params))) break;
+            }
+            else if (typeof validator === 'function') {
+                if(validate(validator(value))) break;
+            }
+            else {
+                throw Error('unknown error')
+            }
         }
     }, [value])
 

@@ -1,4 +1,5 @@
 import { ValidationConfig } from "./textValidation"
+import { Validator } from "./textValidation"
 import { useForm } from "./useForm"
 import useFormField from "./useFormField"
 
@@ -12,38 +13,25 @@ function App() {
 
   const isRequired = (text: string) => text === '' ? {error: 'input is required'} : false
 
-  const minLength = (text: string) => text.length < 10 ? {error: 'does not meet min-length'} : false
+  const _minLength = (text: string, length: number) => text.length < length ? {error: 'too short'} : false
 
-  const greaterThanZero = (num: number) => num && num <= 0 ? {error: 'num less than zero'} : false
+  const minLength = (length: number): Validator<string, [number]> => [_minLength, length]
+
   
   interface Values {
     name: string,
     age: number
   }
 
-  const name = useFormField<string, Values>('', 'name', {
-    validators: [isRequired, minLength],
+  const {error, ...handlers} = useFormField('', 'name', {
+    validators: [isRequired, minLength(10)],
     validationType: 'onChange'
   })
 
-  const age = useFormField<number, Values>(0, 'age', {
-    validators: [greaterThanZero],
-    validationType: 'onSubmit',
-    errors: {
-      duration: 500
-    }
-  })
-
-  useForm<Values>([age, name])
-
   return (
     <>
-      <input type="text" onChange={name.onChange} value={name.value} />
-        {name.error && <span style={{color: 'red'}}>{name.error}</span>}
-
-        <input onChange={age.onChange} value={age.value} type="number" />
-        {age.error && <span style={{color: 'red'}}>{age.error}</span>}
-
+      <input type="text" {...handlers} />
+      {error && <span style={{color: 'red'}}>{error}</span>}
     </>
   )
 }

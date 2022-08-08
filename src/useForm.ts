@@ -1,19 +1,27 @@
 import React from 'react'
+import { UseField } from './useFormField'
 
-interface Field<T>  {
+interface Field<T> extends Omit<UseField, 'onChange' | 'onFocus'>  {
     name: keyof T,
-    value: any,
-    error: string
 }
 
 const useForm = <T extends Object>(state: {fields: Field<T>[]}) => {
 
-    const [values, setValues] = React.useState<T | undefined>()
     const [submitted, setSubmitted] = React.useState(false)
 
     const handleSubmit = () => {
         setSubmitted(true)
     }
+
+    React.useEffect(() => {
+        if(submitted) {
+            state.fields.forEach(field => {
+                if(field.config.validationType === 'onSubmit'){
+                    field.executeValidators()
+                }
+            })
+        }
+    }, [submitted])
 
     return {handleSubmit}
 }

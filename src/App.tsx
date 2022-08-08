@@ -1,3 +1,4 @@
+import { maxLength, minLength } from "./textValidation"
 import useFormField from "./useFormField"
 import { isRequired, ValidationConfig } from "./validation"
 
@@ -6,9 +7,12 @@ export interface Values {
   age: number
 }
 
+
+const nameValidators = [isRequired('name is required'), minLength(5), maxLength(10)]
+
 function App() {
 
-  const name = useFormField('', isRequired('name is required'))
+  const name = useFormField('', ...nameValidators)
   const age = useFormField(0, isRequired('age is required'))
 
   return (

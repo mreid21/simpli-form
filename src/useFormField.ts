@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ValidationConfig } from './validation'
 
 
@@ -11,8 +11,9 @@ function useFormField<T extends Field, U>(initial: T, name: keyof U, config: Val
     const [error, setError] = React.useState('')
     const [touched, setTouched] = React.useState(false)
 
-    const onChange = (e: any) => setValue(e.target.value)
-    const onFocus = (e: any) => setTouched(true)
+    //React.ChangeEvent<HTMLInputElement> for input onChange handler
+    const onChange = (e: any): void => setValue(e.target.value)
+    const onFocus = (e: React.FocusEvent<HTMLInputElement>) => setTouched(true)
 
     const validate = (result: boolean | {error: string}): boolean => {
 
@@ -28,7 +29,7 @@ function useFormField<T extends Field, U>(initial: T, name: keyof U, config: Val
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         for(const validator of validators) {
             if (Array.isArray(validator)) {
                 const [func, ...params] = validator

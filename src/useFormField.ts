@@ -5,7 +5,7 @@ import { ValidationConfig } from './validation'
 type Field = string | number
 
 
-function useFormField<T extends Field, U>(initial: T, name: keyof U, config: ValidationConfig<T>) {
+function useFormField<T, U>(initial: T, name: keyof U, config: ValidationConfig<T>) {
     const {validators} = config
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')
@@ -32,7 +32,7 @@ function useFormField<T extends Field, U>(initial: T, name: keyof U, config: Val
     React.useEffect(() => {
 
         if(!touched) return;
-        
+
         for(const validator of validators) {
             if (Array.isArray(validator)) {
                 const [func, ...params] = validator

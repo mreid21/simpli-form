@@ -1,21 +1,20 @@
 import { maxLength, minLength } from "./textValidation"
 import { useForm } from "./useForm"
 import useFormField from "./useFormField"
-import { isRequired, ValidationConfig } from "./validation"
+import { createConfig, isRequired, ValidationConfig } from "./validation"
 
 export interface Values {
   name: string,
   age: number
 }
 
-const config: ValidationConfig<string> = {initial: '', validationType: 'onChange'}
-const nameValidators = [isRequired('name is required'), minLength(5)]
+const config = createConfig({initial: '', name: 'name', validationType: 'onChange'})
 
 function App() {
 
-  const [name, nameHandlers] = useFormField('name', config, ...nameValidators)
+  const [name, nameHandlers] = useFormField(config, isRequired('please enter a name'), minLength(5))
     
-  const [age, ageHandlers] = useFormField('age', config, isRequired('please enter an age'))
+  const [age, ageHandlers] = useFormField(config, isRequired('please enter an age'))
 
   const {handleSubmit} = useForm<Values>({fields: [name, age]})
 

@@ -14,8 +14,9 @@ const _isRequired = <T>(value: T, error='field is required') => {
 const isRequired = <T>(error='field is required'): Validator<T, [string]> => [_isRequired, error]
 
 
-export type ValidationConfig<T> = {
+export type ValidationConfig<T, U> = {
     initial: T,
+    name?: keyof U,
     validationType?: 'onChange' | 'onSubmit',
     errors?: {
         duration?: number, //in millis
@@ -23,4 +24,9 @@ export type ValidationConfig<T> = {
 }
 
 
-export {isRequired}
+
+const createConfig = <T, U=unknown>(config: ValidationConfig<T, U>) => Object.assign({}, config)
+
+
+
+export {isRequired, createConfig}

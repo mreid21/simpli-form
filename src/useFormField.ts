@@ -12,7 +12,7 @@ export type UseField = {
     error: string
 }
 
-function useFormField<T, U>(name: keyof U, config: ValidationConfig<T>, ...validators: Validator<T, any[]>[]) {
+function useFormField<T, U>(config: ValidationConfig<T, U>, ...validators: Validator<T, any[]>[]) {
     const {initial, validationType} = config
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')

@@ -6,20 +6,10 @@ export interface Values {
   age: number
 }
 
-const nameConfig: ValidationConfig<string> = {
-  validators: [isRequired('name is required')],
-  validationType: 'onChange'
-}
-
-const ageConfig: ValidationConfig<number> = {
-  validators: [isRequired('age is required')],
-  validationType: 'onChange'
-}
-
 function App() {
 
-  const name = useFormField<string, Values>('', nameConfig)
-  const age = useFormField<number, Values>(0, ageConfig)
+  const name = useFormField('', isRequired('name is required'))
+  const age = useFormField(0, isRequired('age is required'))
 
   return (
     <>

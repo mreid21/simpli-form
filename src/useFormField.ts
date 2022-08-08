@@ -1,12 +1,12 @@
 import React from 'react'
-import { ValidationConfig } from './validation'
+import { ValidationConfig, Validator } from './validation'
 
 
 type Field = string | number
 
 
-function useFormField<T, U>(initial: T, config: ValidationConfig<T>) {
-    const {validators} = config
+function useFormField<T, U>(initial: T, ...validators: Validator<T, any[]>[]) {
+
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')
     const [touched, setTouched] = React.useState(false)

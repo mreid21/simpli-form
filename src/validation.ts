@@ -15,7 +15,6 @@ const isRequired = <T>(error='field is required'): Validator<T, [string]> => [_i
 
 
 export type ValidationConfig<T> = {
-    validators: Validator<T, any[]>[],
     validationType: 'onChange' | 'onSubmit',
     errors?: {
         duration?: number, //in millis

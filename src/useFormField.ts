@@ -5,7 +5,7 @@ import { ValidationConfig, Validator } from './validation'
 type Field = string | number
 
 
-function useFormField<T, U>(initial: T, ...validators: Validator<T, any[]>[]) {
+function useFormField<T, U>(name: keyof U,  initial: T, ...validators: Validator<T, any[]>[]) {
 
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')
@@ -13,11 +13,10 @@ function useFormField<T, U>(initial: T, ...validators: Validator<T, any[]>[]) {
 
     //React.ChangeEvent<HTMLInputElement> for input onChange handler
     const onChange = (e: any): void => setValue(e.target.value)
-    const onFocus = (e: React.FocusEvent<HTMLInputElement>) => setTouched(true)
+    const onFocus = (e: any) => setTouched(true)
 
     const validate = (result: boolean | {error: string}): boolean => {
 
-        
         if(typeof result === 'object') {
             const {error} = result
             setError(error)
@@ -47,7 +46,7 @@ function useFormField<T, U>(initial: T, ...validators: Validator<T, any[]>[]) {
         }
     }, [value])
 
-    return ({value, onChange, onFocus, error})
+    return ({name, value, onChange, onFocus, error})
 }
 
 export default useFormField

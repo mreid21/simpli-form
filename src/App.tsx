@@ -1,4 +1,5 @@
 import { maxLength, minLength } from "./textValidation"
+import { useForm } from "./useForm"
 import useFormField from "./useFormField"
 import { isRequired, ValidationConfig } from "./validation"
 
@@ -12,8 +13,10 @@ const nameValidators = [isRequired('name is required'), minLength(5), maxLength(
 
 function App() {
 
-  const name = useFormField('', ...nameValidators)
-  const age = useFormField(0, isRequired('age is required'))
+  const name = useFormField('name', '', ...nameValidators)
+  const age = useFormField('age', '', isRequired('please enter an age'))
+
+  const {handleSubmit} = useForm<Values>({fields: [name, age]})
 
   return (
     <>
@@ -22,8 +25,13 @@ function App() {
       {name.error && <span style={{color: 'red'}}>{name.error}</span>}
 
       <p>{age.value}</p>
-      <input type="number" {...age} />
+      <select {...age} name="age" id="age">
+        <option value="youngin">youngin</option>
+        <option value="young buck">young buck</option>
+        <option value="geezer">geezer</option>
+      </select>
       {age.error && <span style={{color: 'red'}}>{age.error}</span>}
+      <button onClick={handleSubmit}>submit</button>
     </>
   )
 }

@@ -1,25 +1,25 @@
 import useFormField from "./useFormField"
-import { isRequired, clamp, Validator } from "./validation"
+import { isRequired, ValidationConfig } from "./validation"
 
 export interface Values {
   name: string,
   age: number
 }
 
+const nameConfig: ValidationConfig<string> = {
+  validators: [isRequired('name is required')],
+  validationType: 'onChange'
+}
 
+const ageConfig: ValidationConfig<number> = {
+  validators: [isRequired('age is required')],
+  validationType: 'onChange'
+}
 
 function App() {
 
-  const name = useFormField<string, Values>('', 'name', {
-    validators: [isRequired('name is required'), clamp(5, 10)],
-    validationType: 'onChange'
-  })
-
-
-  const age = useFormField<number, Values>(0, 'age', {
-    validators: [isRequired('age is required'), clamp(1, 10, 'number must be between 1 and 10')],
-    validationType: 'onChange'
-  })
+  const name = useFormField<string, Values>('', nameConfig)
+  const age = useFormField<number, Values>(0, ageConfig)
 
   return (
     <>

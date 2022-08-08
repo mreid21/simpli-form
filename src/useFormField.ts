@@ -5,7 +5,7 @@ import { ValidationConfig } from './validation'
 type Field = string | number
 
 
-function useFormField<T, U>(initial: T, name: keyof U, config: ValidationConfig<T>) {
+function useFormField<T, U>(initial: T, config: ValidationConfig<T>) {
     const {validators} = config
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')
@@ -47,7 +47,7 @@ function useFormField<T, U>(initial: T, name: keyof U, config: ValidationConfig<
         }
     }, [value])
 
-    return ({name, value, onChange, onFocus, error})
+    return ({value, onChange, onFocus, error})
 }
 
 export default useFormField

@@ -3,8 +3,7 @@ import { ValidationConfig, Validator } from './validation'
 
 
 export type UseField = {
-    config: any,
-    name: any,
+    config: unknown,
     value: unknown,
     onChange: (e: any) => void,
     onFocus: (e: any) => void,
@@ -13,7 +12,7 @@ export type UseField = {
 }
 
 function useFormField<T, U>(config: ValidationConfig<T, U>, ...validators: Validator<T, any[]>[]) {
-    const {initial, validationType} = config
+    const {initial, validationType, name} = config
     const [value, setValue] = React.useState(initial)
     const [error, setError] = React.useState('')
     const [touched, setTouched] = React.useState(false)
@@ -57,10 +56,10 @@ function useFormField<T, U>(config: ValidationConfig<T, U>, ...validators: Valid
         
     }, [value])
 
-    type FieldMeta = Pick<UseField, 'config' | 'name' | 'value'| 'error' | 'executeValidators'>
+    type FieldMeta = Pick<UseField, 'config'  | 'value'| 'error' | 'executeValidators'> & Pick<ValidationConfig<T, U>, 'name'>
     type FieldHandlers = Pick<UseField, 'onChange' | 'onFocus'>
 
-    return [{config, name, value, error, executeValidators}, {onChange, onFocus}] as [FieldMeta, FieldHandlers]
+    return [{name, config, value, error, executeValidators}, {onChange, onFocus}] as [FieldMeta, FieldHandlers]
     //[{config, name, value, error}, {onChange, onFocus}]
 }
 

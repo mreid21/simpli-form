@@ -8,11 +8,11 @@ export interface Values {
   age: number
 }
 
-const config = createConfig({initial: '', name: 'name', validationType: 'onChange'})
+const config = createConfig({initial: '', name: 'age', validationType: 'onChange'})
 
 function App() {
 
-  const [name, nameHandlers] = useFormField(config, isRequired('please enter a name'), minLength(5))
+  const [name, nameHandlers] = useFormField({initial: '', validationType: 'onChange'}, isRequired('please enter a name'), minLength(5))
     
   const [age, ageHandlers] = useFormField(config, isRequired('please enter an age'))
 

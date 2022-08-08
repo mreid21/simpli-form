@@ -25,7 +25,11 @@ export type ValidationConfig<T, U> = {
 
 
 
-const createConfig = <T, U=unknown>(config: ValidationConfig<T, U>) => Object.assign({}, config)
+const createConfig = <T, U=unknown>(config: ValidationConfig<T, U>): ValidationConfig<T, U> => {
+    const {initial, name, validationType} = config
+
+    return {initial, name, validationType}
+}
 
 
 

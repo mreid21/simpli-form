@@ -2,10 +2,10 @@ import React from 'react'
 import { UseField } from './useFormField'
 
 interface Field<T> extends Omit<UseField, 'onChange' | 'onFocus'>  {
-    name: keyof T,
+    name?: keyof T,
 }
 
-const useForm = <T extends Object>(state: {fields: Field<T>[]}) => {
+const useForm = <T>(state: {fields: Field<T>[]}) => {
 
     const [submitted, setSubmitted] = React.useState(false)
 
@@ -15,11 +15,7 @@ const useForm = <T extends Object>(state: {fields: Field<T>[]}) => {
 
     React.useEffect(() => {
         if(submitted) {
-            state.fields.forEach(field => {
-                if(field.config.validationType === 'onSubmit'){
-                    field.executeValidators()
-                }
-            })
+           
         }
     }, [submitted])
 

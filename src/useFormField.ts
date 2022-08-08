@@ -17,7 +17,7 @@ function useFormField<T extends Field, U>(initial: T, name: keyof U, config: Val
 
     const validate = (result: boolean | {error: string}): boolean => {
 
-        if(!touched) return false
+        
         if(typeof result === 'object') {
             const {error} = result
             setError(error)
@@ -30,6 +30,9 @@ function useFormField<T extends Field, U>(initial: T, name: keyof U, config: Val
     }
 
     React.useEffect(() => {
+
+        if(!touched) return;
+        
         for(const validator of validators) {
             if (Array.isArray(validator)) {
                 const [func, ...params] = validator

@@ -11,13 +11,13 @@ export interface Values {
 function App() {
 
   const name = useFormField<string, Values>('', 'name', {
-    validators: [isRequired(), clamp(5, 10)],
+    validators: [isRequired('name is required'), clamp(5, 10)],
     validationType: 'onChange'
   })
 
 
   const age = useFormField<number, Values>(0, 'age', {
-    validators: [isRequired(), clamp(1, 10, 'number must be between 1 and 10')],
+    validators: [isRequired('age is required'), clamp(1, 10, 'number must be between 1 and 10')],
     validationType: 'onChange'
   })
 

@@ -53,7 +53,7 @@ function useFormField<T, U>(name: keyof U, config: ValidationConfig<T>, ...valid
     React.useEffect(() => {
 
         if(!touched) return;
-        if(validationType && validationType === 'onChange') executeValidators()
+        if(validationType && validationType === 'onChange' || error !== '') executeValidators()
         
     }, [value])
 
